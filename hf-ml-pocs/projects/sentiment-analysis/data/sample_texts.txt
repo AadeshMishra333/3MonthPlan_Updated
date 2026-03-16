@@ -1,0 +1,11 @@
+# Sample texts for sentiment analysis
+# One sentence per line. Lines starting with '#' are ignored.
+
+This movie was absolutely fantastic. I would watch it again!
+The acting was outstanding and the plot kept me engaged throughout.
+I can't believe how good this restaurant is – best meal I've had in years.
+The product broke after two days. Extremely disappointed with the quality.
+The service was terrible and I want a refund.
+Meh, it was okay – nothing special but not bad either.
+I loved every minute of this book. Couldn't put it down.
+Worst experience ever. I will never come back here again.

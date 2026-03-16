@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Hugging Face model cache (models are downloaded at runtime, not committed)
+models/
+.cache/
+
+# Audio and large binary files
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Secrets / tokens
+.env
+*.key
