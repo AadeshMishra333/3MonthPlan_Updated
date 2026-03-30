@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katha Registration | Divya Chetna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <nav class="navbar" id="navbar">
+      <a href="index.html#home" class="brand" aria-label="Back to home">
+        <img src="Pictures/logo.png" alt="Divya Chetna" class="brand-logo" />
+        <span class="brand-text">
+          <span class="brand-hi">ॐ श्री क्षेमेश्वराय नमः</span>
+          <span class="brand-en">DIVYA CHETNA</span>
+        </span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#katha" class="active">Back to Katha</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section section-alt" id="registration-section">
+      <div class="container" style="max-width: 680px;">
+        <div class="section-head">
+          <p class="eyebrow">Katha Registration</p>
+          <h1>Register for Shree Ram Katha</h1>
+          <p>This is a basic form page for now. We will connect backend functionality in the next phase.</p>
+        </div>
+
+        <div class="card">
+          <form class="form" novalidate>
+            <label>
+              Full Name *
+              <input type="text" required placeholder="Your full name" />
+            </label>
+            <label>
+              Mobile Number *
+              <input type="tel" required placeholder="+91 XXXXX XXXXX" />
+            </label>
+            <label>
+              Email
+              <input type="email" placeholder="your@email.com" />
+            </label>
+            <label>
+              City
+              <input type="text" placeholder="Your city" />
+            </label>
+            <label>
+              Participation Type
+              <select>
+                <option>General Attendance</option>
+                <option>Volunteer / Seva</option>
+                <option>Family Group</option>
+              </select>
+            </label>
+            <button type="button" class="btn btn-primary">Submit (Basic)</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 Divya Chetna Trust</p>
+      <p>Basic registration page (functionality phase pending).</p>
+    </div>
+  </footer>
+</body>
+</html>
