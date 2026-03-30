@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divya Chetna | Shree Ram Katha charitable trust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="loader" aria-live="polite" aria-label="Loading website">
+    <div class="loader-ring"></div>
+    <img class="loader-logo" src="Pictures/logo.png" alt="Divya Chetna logo" />
+    <p class="loader-text">Divya Chetna</p>
+  </div>
+
+  <header class="site-header" id="top">
+    <nav class="navbar" id="navbar">
+      <a href="#home" class="brand" aria-label="Go to top">
+        <img src="Pictures/logo.png" alt="Divya Chetna" class="brand-logo" />
+        <span class="brand-text">
+          <span class="brand-hi">ॐ श्री क्षेमेश्वराय नमः</span>
+          <span class="brand-en">DIVYA CHETNA</span>
+        </span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="desktopNav">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#katha">Katha</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#donate">Donate</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="nav-cta" href="katha-register.html#registration-section">Join Katha</a></li>
+      </ul>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay" hidden></div>
+    <div class="mobile-menu" id="mobileMenu" hidden>
+      <button type="button" class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+      <a href="#home">Home</a>
+      <a href="#katha">Katha Details</a>
+      <a href="#about">About</a>
+      <a href="#donate">Donate</a>
+      <a href="#contact">Contact</a>
+      <a href="katha-register.html#registration-section" class="mobile-cta">Register for Katha</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
+      <div class="hero-bell" aria-label="Devotional bell interaction">
+        <button type="button" class="bell-btn" id="heroBellButton" aria-label="Press bell for blessing message">
+          <span class="bell-glow" aria-hidden="true"></span>
+          <svg class="bell-icon" viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+            <path d="M12 4a5 5 0 0 0-5 5v2.8c0 1.1-.4 2.2-1.2 3L4 16.4V18h16v-1.6l-1.8-1.6a4.4 4.4 0 0 1-1.2-3V9a5 5 0 0 0-5-5Z" />
+            <path d="M9.8 18.8a2.2 2.2 0 0 0 4.4 0" />
+          </svg>
+        </button>
+        <p class="bell-prompt" aria-hidden="true">Press Bell</p>
+      </div>
+      <div class="bell-stream" id="heroBellStream" aria-live="polite"></div>
+      <div class="container hero-content reveal">
+        <p class="hero-mantra">ॐ श्री क्षेमेश्वराय नमः</p>
+        <h1>DIVYA CHETNA</h1>
+        <h3>Shree Ram Katha Charitable Trust</h3>
+        <p class="hero-subtext">We invite seekers to join Katha, connect with our trust mission, and grow through devotional wisdom, community seva, and mindful living.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#katha">Explore Ramkatha Details</a>
+          <a class="btn btn-secondary" href="katha-register.html#registration-section">Register for Katha</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="katha">
+      <div class="container reveal">
+        <div class="section-head">
+          <p class="eyebrow">Featured Program</p>
+          <h2>Shree Ram Katha Mahotsav 2026</h2>
+          <p>A divine seven-day experience of Katha, bhakti, and inner transformation for all devotees.</p>
+        </div>
+
+        <div class="katha-grand">
+          <div class="katha-main reveal-left">
+            <img src="Pictures/01.png" alt="Sacred Katha ambience" class="katha-story-image" />
+            <p class="katha-story">
+              Experience a soul-stirring seven-day journey through the <span class="text-emphasis">Shree Ram</span> Katha, brought to life by the divine narration of <span class="text-emphasis">Pujya Rajan Ji</span> Maharaj.
+            </p>
+            <p class="katha-story">
+              From the sacred birth of <span class="text-emphasis">Shree Ram</span> to the ultimate triumph of righteousness over evil, immerse yourself in a saga of unmatched valor and discipline. Let this mesmerizing journey inspire you to weave the timeless wisdom of the <span class="text-emphasis">Ramayan</span> into the fabric of your daily life.
+            </p>
+            <p class="katha-tagline">A divine transformation awaits.</p>
+
+            <div class="katha-meta-grid" aria-label="Katha schedule and venue details">
+              <article class="katha-meta-card">
+                <p class="meta-label">Date</p>
+                <p>1st to 7th September 2026</p>
+              </article>
+              <article class="katha-meta-card">
+                <p class="meta-label">Time</p>
+                <p>3:00 PM to 7:00 PM</p>
+              </article>
+              <article class="katha-meta-card">
+                <p class="meta-label">Venue</p>
+                <p>
+                  <a href="https://share.google/T4qm7TaivesYaYhch" target="_blank" rel="noopener noreferrer">Palace Ground Gate No. 9</a>
+                </p>
+              </article>
+            </div>
+
+            <div class="hero-actions katha-actions">
+              <a class="btn btn-primary" href="katha-register.html#registration-section">Register for Katha</a>
+              <a class="btn btn-secondary" href="#about">About the Trust</a>
+            </div>
+          </div>
+
+          <aside class="katha-side reveal-right" aria-label="Guruji and Katha resources">
+            <article class="guruji-card">
+              <img src="Pictures/guruji.jpg" alt="Pujya Rajan Jee Maharaj" class="guruji-image" />
+              <h3>About Maharaj Ji</h3>
+              <p>
+                Embarking on a journey of devotion, spirituality, and enlightenment, Pujya Rajan Jee Maharaj stands as a beacon of hope, faith, and inspiration to millions. With his profound knowledge, captivating oratory skills, and deep-seated devotion to Shree Sita-Ram Bhagwan, Rajan Jee has carved a unique niche in the hearts of his followers.
+              </p>
+              <div class="katha-links">
+                <a href="https://pujyarajanjee.com/pages/about" target="_blank" rel="noopener noreferrer">Official Website</a>
+                <a href="https://www.youtube.com/pujyarajanjee" target="_blank" rel="noopener noreferrer">YouTube / Live Stream</a>
+              </div>
+            </article>
+
+            <article class="bhajan-card">
+              <h4>Mind Freshening Bhajans</h4>
+              <div class="katha-links">
+                <a href="https://www.youtube.com/watch?v=31gSwnZrwT0" target="_blank" rel="noopener noreferrer">SitaRam SitaRam</a>
+                <a href="https://www.youtube.com/watch?v=EOpCLBH2Xoo" target="_blank" rel="noopener noreferrer">Agar Naath Dekhoge</a>
+                <a href="https://www.youtube.com/watch?v=4ucomwXJ8SM" target="_blank" rel="noopener noreferrer">Jaha le chaloge</a>
+              </div>
+            </article>
+          </aside>
+        </div>
+
+        <div class="katha-gallery reveal" aria-label="Katha photo gallery">
+          <h3>Katha Moments Gallery</h3>
+          <div class="slider-frame" data-carousel="katha" aria-label="Katha photo carousel">
+            <img src="Pictures/01.png" alt="Devotional gathering during Katha session" class="slide active" />
+            <img src="Pictures/bg.png" alt="Katha stage setup with devotees" class="slide" />
+            <img src="Pictures/diya.png" alt="Sacred diya during evening devotion" class="slide" />
+            <img src="Pictures/guruji.jpg" alt="Pujya Rajan Jee Maharaj during discourse" class="slide" />
+            <button class="slider-btn prev" type="button" aria-label="Previous Katha photo">&#10094;</button>
+            <button class="slider-btn next" type="button" aria-label="Next Katha photo">&#10095;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-shell">
+        <div class="about-grid">
+          <div class="about-slider about-card reveal-left">
+            <p class="eyebrow">Our Identity</p>
+            <h2>About the Trust</h2>
+            <img src="Pictures/logo.png" alt="Divya Chetna trust logo" class="about-static-image" />
+          </div>
+
+          <div class="about-copy about-card reveal-right">
+            <h3>Spiritual service with clarity and purpose</h3>
+            <p>Divya Chetna is focused on spiritual upliftment through Katha and trust-led community work. Our mission is to strengthen bhakti, preserve values, and build collective welfare through spiritual gatherings and seva initiatives.</p>
+            <ul class="feature-list">
+              <li>Bhakti-centered Katha gatherings</li>
+              <li>Trust initiatives and seva opportunities</li>
+              <li>Bilingual communication (Hindi + English)</li>
+              <li>Future-ready platform for product offerings</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="donate">
+      <div class="container reveal">
+        <div class="section-head">
+          <p class="eyebrow">Support</p>
+          <h2>Donate to Divya Chetna</h2>
+          <p>Select a contribution amount and share an optional message with your donation.</p>
+        </div>
+        <article class="card donation-panel">
+          <form id="donateForm" class="form donation-form" novalidate>
+            <fieldset class="donation-fieldset">
+              <legend>Choose amount</legend>
+              <div class="donation-tabs" role="radiogroup" aria-label="Donation amount">
+                <input type="radio" id="amount11" name="donationAmount" value="11" checked />
+                <label for="amount11" class="donation-tab">11</label>
+
+                <input type="radio" id="amount101" name="donationAmount" value="101" />
+                <label for="amount101" class="donation-tab">101</label>
+
+                <input type="radio" id="amount501" name="donationAmount" value="501" />
+                <label for="amount501" class="donation-tab">501</label>
+
+                <input type="radio" id="amountCustom" name="donationAmount" value="custom" />
+                <label for="amountCustom" class="donation-tab">Custom</label>
+              </div>
+            </fieldset>
+
+            <label for="customAmount">
+              Custom amount
+              <input id="customAmount" name="customAmount" type="number" min="1" step="1" placeholder="Enter custom amount" disabled />
+            </label>
+
+            <label for="donationMessage">
+              Message with donation (optional)
+              <textarea id="donationMessage" name="donationMessage" rows="4" placeholder="Write a blessing or support message"></textarea>
+            </label>
+
+            <button type="submit" class="btn btn-primary donate-submit">Donate</button>
+            <p class="form-status" id="donateStatus" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-wrap">
+      <div class="footer-copy">
+        <p>© 2026 Divya Chetna Trust</p>
+        <p>Built for Katha awareness, trust connection, and future growth.</p>
+      </div>
+      <form class="footer-contact" id="contactForm" novalidate>
+        <input type="email" id="contactEmail" name="contactEmail" placeholder="Email" aria-label="Email" />
+        <input type="tel" id="contactNumber" name="contactNumber" placeholder="Number" aria-label="Number" />
+      </form>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
