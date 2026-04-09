@@ -26,42 +26,38 @@
   </header>
 
   <main>
-    <section class="section section-alt" id="registration-section">
+    <section class="section section-alt" id="sign-in-section">
       <div class="container" style="max-width: 680px;">
         <div class="section-head">
-          <p class="eyebrow">Katha Registration</p>
-          <h1>Register for Shree Ram Katha</h1>
-          <p>This is a basic form page for now. We will connect backend functionality in the next phase.</p>
+          <p class="eyebrow">Join Katha</p>
+          <h1>Sign In to Continue</h1>
+          <p>New users: enter name and mobile number. Returning users: use the same name + mobile to sign in.</p>
         </div>
 
-        <div class="card">
-          <form class="form" novalidate>
-            <label>
+        <div class="card sign-in-card" id="registration-section">
+          <form class="form" id="kathaSignInForm" novalidate>
+            <label for="signInName">
               Full Name *
-              <input type="text" required placeholder="Your full name" />
+              <input id="signInName" name="name" type="text" required placeholder="Your full name" autocomplete="name" />
             </label>
-            <label>
+            <label for="signInMobile">
               Mobile Number *
-              <input type="tel" required placeholder="+91 XXXXX XXXXX" />
+              <input id="signInMobile" name="mobile" type="tel" required inputmode="numeric" placeholder="+91 XXXXX XXXXX" autocomplete="tel" />
             </label>
-            <label>
-              Email
-              <input type="email" placeholder="your@email.com" />
+            <label for="signInEmail">
+              Email (optional)
+              <input id="signInEmail" name="email" type="email" placeholder="your@email.com" autocomplete="email" />
             </label>
-            <label>
-              City
-              <input type="text" placeholder="Your city" />
-            </label>
-            <label>
-              Participation Type
-              <select>
-                <option>General Attendance</option>
-                <option>Volunteer / Seva</option>
-                <option>Family Group</option>
-              </select>
-            </label>
-            <button type="button" class="btn btn-primary">Submit (Basic)</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+            <p class="form-status" id="kathaSignInStatus" aria-live="polite"></p>
+            <p class="sign-in-note">Dummy phase: your details are stored in browser local storage as text data for now.</p>
           </form>
+
+          <section class="signed-in-state" id="kathaSignedInState" hidden aria-live="polite">
+            <h3>You are signed in</h3>
+            <p id="signedInSummary"></p>
+            <button type="button" class="btn btn-secondary" id="signOutBtn">Sign Out</button>
+          </section>
         </div>
       </div>
     </section>
@@ -70,8 +66,10 @@
   <footer class="site-footer">
     <div class="container footer-wrap">
       <p>© 2026 Divya Chetna Trust</p>
-      <p>Basic registration page (functionality phase pending).</p>
+      <p>Sign-in page in dummy mode (backend phase pending).</p>
     </div>
   </footer>
+
+  <script src="katha-signin.js"></script>
 </body>
 </html>
