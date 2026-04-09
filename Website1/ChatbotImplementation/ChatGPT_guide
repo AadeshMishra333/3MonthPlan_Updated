@@ -1,0 +1,36 @@
+For this kind of website chat, the best pattern is usually not to train a model from scratch. Instead, use a base LLM through the Responses API, keep conversation state on your server, stream replies into the widget, and attach tools such as file search / retrieval when the bot needs company knowledge. OpenAI also exposes fine-tuning, embeddings, and moderation, which covers behavior, knowledge grounding, and safety without rebuilding the model itself.
+
+How to design it
+Decide the bot’s role first.
+Define whether it answers FAQs, captures leads, tracks orders, books appointments, or escalates to a human. This matters because the architecture changes depending on whether the bot is only conversational or also action-based.
+Prepare your company knowledge.
+Collect FAQs, policies, product docs, pricing rules, return policies, and escalation rules. Store them in a clean format. For knowledge-heavy bots, use retrieval with embeddings or file search/vector stores so the model can pull the right context at runtime instead of memorizing everything. OpenAI’s docs expose embeddings and vector-store/file-search tooling for this pattern.
+Do not “train the LLM” as the first step.
+Start with a strong system prompt plus retrieval. Fine-tuning is useful later if you want a very specific tone, response format, or repeatable behavior; the fine-tuning docs show supervised tuning with parameters like batch size, learning-rate multiplier, and epochs.
+Add sentiment and intent detection as a small routing layer.
+The cleanest design is: user message → classify sentiment/intent/urgency → decide whether to answer normally, retrieve documents, or hand off to a human. Use structured output or function calling so the model returns something like JSON: {sentiment, intent, urgency, confidence, handoff_required}. OpenAI’s API docs include structured output, function calling, and tool usage in the Responses stack.
+Put safety in front of generation.
+Run a moderation check on user text before sending it to the main model, especially if your site is public. OpenAI’s moderation endpoint classifies text and image inputs as potentially harmful, so it fits nicely as a pre-filter.
+Suggested event flow
+
+Widget opens → session starts → user sends message → backend receives it → moderation check runs → sentiment/intent classifier runs → knowledge retrieval runs if needed → LLM generates answer → streamed response goes back to the widget → log the turn and analytics → escalate to human if confidence is low or sentiment is negative.
+This flow matches the current API building blocks: conversation state, streaming, webhooks, tools, and file inputs are all part of the OpenAI API surface.
+
+Should you build on a dummy site first?
+
+Yes. Build a staging/dummy website first, wire the chatbot there, test prompts, retrieval quality, handoff logic, latency, and edge cases, then move it into your real site. That is the safest way to catch bad answers and broken flows before production, and it fits the general production-first guidance in the OpenAI docs.
+
+What you should research before starting
+
+You should decide these before coding: where the knowledge will live, how often it updates, whether the bot must remember previous turns, what triggers human handoff, what data you are allowed to store, and how you will evaluate quality. Also plan for streaming, prompt caching, cost control, and test sets for common user questions. OpenAI’s docs explicitly cover conversation state, streaming, prompt caching, and evaluations, which are exactly the pieces you will need for a production bot.
+
+Practical build order
+
+First, make the backend API that receives chat messages.
+Second, add moderation and sentiment/intent classification.
+Third, connect your knowledge base with embeddings or file search.
+Fourth, connect the LLM and stream answers.
+Fifth, build the bottom-left chat widget.
+Sixth, test on staging.
+Seventh, add analytics and human handoff.
+Eighth, deploy to production. The OpenAI API supports REST, streaming, and realtime flows, so this architecture is straightforward to implement in a web app.

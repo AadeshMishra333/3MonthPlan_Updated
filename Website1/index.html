@@ -36,9 +36,9 @@
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#katha">Katha</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#donate">Donate</a></li>
+        <!-- <li><a href="#donate">Donate</a></li> -->
         <li><a href="#contact">Contact</a></li>
-        <li><a class="nav-cta" href="katha-register.html#registration-section">Join Katha</a></li>
+        <li><a class="nav-cta" href="katha-register.html#sign-in-section">Join Katha</a></li>
       </ul>
     </nav>
 
@@ -48,9 +48,9 @@
       <a href="#home">Home</a>
       <a href="#katha">Katha Details</a>
       <a href="#about">About</a>
-      <a href="#donate">Donate</a>
+      <!-- <a href="#donate">Donate</a> -->
       <a href="#contact">Contact</a>
-      <a href="katha-register.html#registration-section" class="mobile-cta">Register for Katha</a>
+      <a href="katha-register.html#sign-in-section" class="mobile-cta">Join Katha</a>
     </div>
   </header>
 
@@ -76,8 +76,40 @@
         <p class="hero-subtext">We invite seekers to join Katha, connect with our trust mission, and grow through devotional wisdom, community seva, and mindful living.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#katha">Explore Ramkatha Details</a>
-          <a class="btn btn-secondary" href="katha-register.html#registration-section">Register for Katha</a>
+          <a class="btn btn-secondary" href="katha-register.html#sign-in-section">Join Katha</a>
         </div>
+      </div>
+      <div class="social-links hero-social" aria-label="Social media links">
+        <a
+          class="social-btn social-whatsapp"
+          href="https://chat.whatsapp.com/J8iwk0XRGoc4tBQKvgCsTx?mode=gi_t"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Join us on WhatsApp"
+        >
+          <img src="Pictures/wht-removebg-preview.png" alt="WhatsApp" loading="lazy" />
+          <span>WhatsApp</span>
+        </a>
+        <a
+          class="social-btn social-youtube"
+          href="https://youtube.com/@sdivyachetna?subscribe"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit our YouTube channel"
+        >
+          <img src="Pictures/yt-removebg-preview.png" alt="YouTube" loading="lazy" />
+          <span>YouTube</span>
+        </a>
+        <a
+          class="social-btn social-instagram"
+          href="https://www.instagram.com/dc_srct?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Follow us on Instagram"
+        >
+          <img src="Pictures/ig-removebg-preview.png" alt="Instagram" loading="lazy" />
+          <span>Instagram</span>
+        </a>
       </div>
     </section>
 
@@ -118,7 +150,7 @@
             </div>
 
             <div class="hero-actions katha-actions">
-              <a class="btn btn-primary" href="katha-register.html#registration-section">Register for Katha</a>
+              <a class="btn btn-primary" href="katha-register.html#sign-in-section">Join Katha</a>
               <a class="btn btn-secondary" href="#about">About the Trust</a>
             </div>
           </div>
@@ -150,10 +182,10 @@
         <div class="katha-gallery reveal" aria-label="Katha photo gallery">
           <h3>Katha Moments Gallery</h3>
           <div class="slider-frame" data-carousel="katha" aria-label="Katha photo carousel">
-            <img src="Pictures/01.png" alt="Devotional gathering during Katha session" class="slide active" />
-            <img src="Pictures/bg.png" alt="Katha stage setup with devotees" class="slide" />
-            <img src="Pictures/diya.png" alt="Sacred diya during evening devotion" class="slide" />
+            <img src="Pictures/ram katha/crowd1.jpeg" alt="Devotional gathering during Katha session" class="slide active" />
+            <img src="Pictures/ram katha/crowd2.jpeg" alt="Katha devotees in spiritual assembly" class="slide" />
             <img src="Pictures/guruji.jpg" alt="Pujya Rajan Jee Maharaj during discourse" class="slide" />
+            <img src="Pictures/guruji2.jpg" alt="Pujya Rajan Jee Maharaj blessing devotees" class="slide" />
             <button class="slider-btn prev" type="button" aria-label="Previous Katha photo">&#10094;</button>
             <button class="slider-btn next" type="button" aria-label="Next Katha photo">&#10095;</button>
           </div>
@@ -161,29 +193,132 @@
       </div>
     </section>
 
+    <section class="viewer-banner" id="visitorCountSection" aria-label="Website visitor count">
+      <div class="viewer-grid">
+        <div class="viewer-item reveal">
+          <div class="viewer-number" id="visitorCount" data-target="0">0</div>
+          <div class="viewer-label">Ram Bhakts Visited This Website</div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="about">
       <div class="container about-shell">
-        <div class="about-grid">
-          <div class="about-slider about-card reveal-left">
-            <p class="eyebrow">Our Identity</p>
-            <h2>About the Trust</h2>
-            <img src="Pictures/logo.png" alt="Divya Chetna trust logo" class="about-static-image" />
+        <div class="about-tabs reveal" data-about-tabs>
+          <div class="section-head left">
+            <p class="eyebrow">Our Story in Motion</p>
+            <h2>About Us</h2>
           </div>
 
-          <div class="about-copy about-card reveal-right">
-            <h3>Spiritual service with clarity and purpose</h3>
-            <p>Divya Chetna is focused on spiritual upliftment through Katha and trust-led community work. Our mission is to strengthen bhakti, preserve values, and build collective welfare through spiritual gatherings and seva initiatives.</p>
-            <ul class="feature-list">
-              <li>Bhakti-centered Katha gatherings</li>
-              <li>Trust initiatives and seva opportunities</li>
-              <li>Bilingual communication (Hindi + English)</li>
-              <li>Future-ready platform for product offerings</li>
-            </ul>
+          <div class="about-tabs-nav" role="tablist" aria-label="About Us sections">
+            <button type="button" class="about-tab-btn" role="tab" id="about-tab-journey" aria-selected="true" aria-controls="about-panel-journey" tabindex="0">Our Journey</button>
+            <button type="button" class="about-tab-btn" role="tab" id="about-tab-vision" aria-selected="false" aria-controls="about-panel-vision" tabindex="-1">Our Vision</button>
+            <button type="button" class="about-tab-btn" role="tab" id="about-tab-events" aria-selected="false" aria-controls="about-panel-events" tabindex="-1">Events</button>
+            <button type="button" class="about-tab-btn" role="tab" id="about-tab-charity" aria-selected="false" aria-controls="about-panel-charity" tabindex="-1">Charity</button>
+          </div>
+
+          <div class="about-panels">
+            <article class="about-panel is-active" role="tabpanel" id="about-panel-journey" aria-labelledby="about-tab-journey">
+              <div class="about-panel-text">
+                <h3>Our Journey</h3>
+                <p>Divya Chetna began with a simple intention: to build a sacred space where devotion, wisdom, and service can thrive together. With every katha and community initiative, this journey continues to expand.</p>
+                <p>From humble gatherings to larger spiritual experiences, each step has been guided by faith, discipline, and collective participation from devotees.</p>
+              </div>
+              <div class="about-panel-media" aria-label="Our Journey photo highlights">
+                <div class="about-media-stage">
+                  <img src="Pictures/Mandir and Journey/IMG20251229145406.jpg" alt="Our Journey temple development moment" class="about-photo active" />
+                  <img src="Pictures/Mandir and Journey/IMG20251229145436.jpg" alt="Our Journey satsang gathering" class="about-photo" />
+                  <img src="Pictures/Mandir and Journey/IMG20251229162013.jpg" alt="Our Journey mandir preparation" class="about-photo" />
+                  <img src="Pictures/Mandir and Journey/IMG20260122124207.jpg" alt="Our Journey devotional activity" class="about-photo" />
+                  <img src="Pictures/Mandir and Journey/IMG20260122124503.jpg" alt="Our Journey community participation" class="about-photo" />
+                </div>
+              </div>
+            </article>
+
+            <article class="about-panel" role="tabpanel" id="about-panel-vision" aria-labelledby="about-tab-vision" hidden>
+              <div class="about-panel-text">
+                <h3>Our Vision</h3>
+                <p>Our vision is to create a spiritually grounded and socially conscious community where values of seva, compassion, and devotion are lived every day.</p>
+                <p>We aim to connect generations through meaningful spiritual experiences and make timeless wisdom accessible through modern outreach.</p>
+              </div>
+              <div class="about-panel-media" aria-label="Our Vision photo highlights">
+                <div class="about-media-stage">
+                  <img src="Pictures/bg.png" alt="Our Vision spiritual ambiance" class="about-photo active" />
+                  <img src="Pictures/logo.png" alt="Our Vision trust symbol" class="about-photo" />
+                  <img src="Pictures/bg.png" alt="Our Vision devotional gathering backdrop" class="about-photo" />
+                  <img src="Pictures/logo.png" alt="Our Vision emblem of service" class="about-photo" />
+                  <img src="Pictures/bg.png" alt="Our Vision sacred event ambiance" class="about-photo" />
+                </div>
+              </div>
+            </article>
+
+            <article class="about-panel about-panel-events" role="tabpanel" id="about-panel-events" aria-labelledby="about-tab-events" hidden>
+              <div class="about-panel-text">
+                <h3>Events</h3>
+                <p>Our events are intentionally divided into three active substreams, each with its own focus, rhythm, and visual identity.</p>
+
+                <div class="events-segments" aria-label="Events segmented into Ramkatha, Mandir and Other Events">
+                  <article class="event-segment event-segment-ram">
+                    <div class="event-segment-header">
+                      <h4>Ramkatha</h4>
+                    </div>
+                    <p>Main spiritual discourse programs centered on Ramayan wisdom, bhakti immersion, and community-wide satsang participation.</p>
+                    <div class="event-segment-gallery" aria-label="Ramkatha event photos">
+                      <img src="Pictures/01.png" alt="Ramkatha discourse session" class="event-segment-photo active" />
+                      <img src="Pictures/02.png" alt="Ramkatha devotees gathering" class="event-segment-photo" />
+                      <img src="Pictures/logo.png" alt="Ramkatha photo placeholder" class="event-segment-photo" />
+                    </div>
+                  </article>
+
+                  <article class="event-segment event-segment-mandir">
+                    <div class="event-segment-header">
+                      <h4>Mandir</h4>
+                    </div>
+                    <p>Temple-focused activities including devotional rituals, aarti coordination, and spiritually rooted congregation experiences.</p>
+                    <div class="event-segment-gallery" aria-label="Mandir event photos">
+                      <img src="Pictures/Mandir and Journey/IMG20250226055819.jpg" alt="Mandir worship ritual" class="event-segment-photo active" />
+                      <img src="Pictures/Mandir and Journey/IMG20250226061022.jpg" alt="Mandir prayer setup" class="event-segment-photo" />
+                      <img src="Pictures/Mandir and Journey/IMG20250226104002.jpg" alt="Mandir community gathering" class="event-segment-photo" />
+                    </div>
+                  </article>
+
+                  <article class="event-segment event-segment-other">
+                    <div class="event-segment-header">
+                      <h4>Other Events</h4>
+                    </div>
+                    <p>Cultural and festival events such as Chhath Puja, Rudrabhishek, and other community celebrations through the year.</p>
+                    <div class="event-segment-gallery" aria-label="Other events photos">
+                      <img src="Pictures/logo.png" alt="Other events photo placeholder" class="event-segment-photo active" />
+                      <img src="Pictures/bg.png" alt="Other events photo placeholder" class="event-segment-photo" />
+                      <img src="Pictures/logo.png" alt="Other events photo placeholder" class="event-segment-photo" />
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </article>
+
+            <article class="about-panel" role="tabpanel" id="about-panel-charity" aria-labelledby="about-tab-charity" hidden>
+              <div class="about-panel-text">
+                <h3>Charity</h3>
+                <p>Charity at Divya Chetna is a form of worship. Through seva-led outreach, we support people and communities with dignity, care, and transparency.</p>
+                <p>From essential assistance to festival and wellness support initiatives, our efforts are rooted in compassion and collective responsibility.</p>
+              </div>
+              <div class="about-panel-media" aria-label="Charity photo highlights">
+                <div class="about-media-stage">
+                  <img src="Pictures/Charity/charity.jpeg" alt="Charity service outreach" class="about-photo active" />
+                  <img src="Pictures/Charity/kids.jpeg" alt="Charity support for children" class="about-photo" />
+                  <img src="Pictures/Charity/charity.jpeg" alt="Charity volunteers in action" class="about-photo" />
+                  <img src="Pictures/Charity/kids.jpeg" alt="Charity community care" class="about-photo" />
+                  <img src="Pictures/Charity/charity.jpeg" alt="Charity seva effort" class="about-photo" />
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
+    <!--
     <section class="section" id="donate">
       <div class="container reveal">
         <div class="section-head">
@@ -226,6 +361,7 @@
         </article>
       </div>
     </section>
+    -->
 
   </main>
 
@@ -235,10 +371,10 @@
         <p>© 2026 Divya Chetna Trust</p>
         <p>Built for Katha awareness, trust connection, and future growth.</p>
       </div>
-      <form class="footer-contact" id="contactForm" novalidate>
-        <input type="email" id="contactEmail" name="contactEmail" placeholder="Email" aria-label="Email" />
-        <input type="tel" id="contactNumber" name="contactNumber" placeholder="Number" aria-label="Number" />
-      </form>
+      <div class="footer-contact" aria-label="Contact information">
+        <p>Email: <a href="mailto:support@divyachetna.in">support@divyachetna.in</a></p>
+        <p>Contact: <a href="tel:+919187223601">+91 9187223601</a></p>
+      </div>
     </div>
   </footer>
 
