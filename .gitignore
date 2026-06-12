@@ -2,3 +2,14 @@ Website1/Executive Summary.pdf
 Website1/view-source_https___divyachetna.gt.tc.html
 Website1/plan_draft.md
 Website1/progress.md
+
+# Build artifacts and compiled classes
+JiyaPBL/bin/
+JiyaPBL/bin.zip
+JiyaPBL/.vscode/
+
+# Local database locks and queries
+JiyaPBL/data/*.db-journal
+JiyaPBL/data/*.sqbpro
+JiyaPBL/data/*.db-wal
+JiyaPBL/data/*.db-shm

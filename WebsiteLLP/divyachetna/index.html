@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>दिव्य चेतना - श्री रामकथा चैरिटेबल ट्रस्ट</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <div class="om-symbol">ॐ</div>
+    <div class="nav-title-group">
+      <span class="nav-title-hi">दिव्य चेतना</span>
+      <span class="nav-title-en">Divya Chetna</span>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">होम</a></li>
+    <li><a href="pages/about.html">परिचय</a></li>
+    <li><a href="pages/events.html">आयोजन</a></li>
+    <li><a href="pages/gallery.html">गैलरी</a></li>
+    <li><a href="pages/seva.html">सेवा</a></li>
+    <li><a href="pages/contact.html">संपर्क</a></li>
+    <li><a href="pages/register.html" class="nav-cta">पंजीकरण</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-mandala"></div>
+  <div class="hero-content">
+    <div class="hero-badge">॥ श्री राम जय राम जय जय राम ॥</div>
+    <h1 class="hero-title">
+      <span class="hero-title-main">दिव्य चेतना</span>
+      <span class="hero-title-sub">श्री रामकथा चैरिटेबल ट्रस्ट</span>
+    </h1>
+    <p class="hero-desc">
+      भगवान श्री राम की दिव्य कथा के माध्यम से जन-जन में चेतना का प्रसार,<br>
+      सेवा, भक्ति और ज्ञान का अनूठा संगम
+    </p>
+    <div class="hero-actions">
+      <a href="pages/register.html" class="btn-primary">
+        <span>पंजीकरण करें</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="pages/events.html" class="btn-secondary">आगामी आयोजन</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num" data-target="50000">0</span><span class="stat-label">भक्तगण</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item"><span class="stat-num" data-target="25">0</span><span class="stat-label">वर्षों की सेवा</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item"><span class="stat-num" data-target="100">0</span><span class="stat-label">आयोजन</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>नीचे स्क्रॉल करें</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Upcoming Event Banner -->
+<section class="event-banner">
+  <div class="event-banner-inner">
+    <div class="event-badge">आगामी महाआयोजन</div>
+    <div class="event-banner-content">
+      <div class="event-info">
+        <h2>श्री रामकथा महोत्सव 2025</h2>
+        <p>सितंबर 1–7, 2025 · पैलेस ग्राउंड, गेट 9, बेंगलुरु</p>
+      </div>
+      <div class="event-countdown" id="countdown">
+        <div class="count-box"><span id="cDays">00</span><label>दिन</label></div>
+        <div class="count-box"><span id="cHours">00</span><label>घंटे</label></div>
+        <div class="count-box"><span id="cMins">00</span><label>मिनट</label></div>
+        <div class="count-box"><span id="cSecs">00</span><label>सेकंड</label></div>
+      </div>
+      <a href="pages/register.html" class="btn-gold">अभी पंजीकरण करें</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="section-about">
+  <div class="container">
+    <div class="section-label">हमारे बारे में</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">रामकथा — जीवन का प्रकाश</h2>
+        <p>दिव्य चेतना श्री रामकथा चैरिटेबल ट्रस्ट की स्थापना भगवान श्री राम के आदर्शों को जन-जन तक पहुँचाने के पवित्र उद्देश्य से हुई है। हमारा ट्रस्ट शिक्षा, स्वास्थ्य और आध्यात्मिक उत्थान के क्षेत्र में निरंतर कार्यरत है।</p>
+        <p>हर वर्ष हम भव्य रामकथा का आयोजन करते हैं जिसमें देश-विदेश से लाखों श्रद्धालु सम्मिलित होते हैं।</p>
+        <a href="pages/about.html" class="link-arrow">विस्तार से जानें →</a>
+      </div>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🙏</div>
+          <h3>भक्ति</h3>
+          <p>राम नाम की भक्ति से जीवन में शांति और आनंद की प्राप्ति</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📚</div>
+          <h3>ज्ञान</h3>
+          <p>रामायण के माध्यम से जीवन मूल्यों और नैतिकता की शिक्षा</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">💛</div>
+          <h3>सेवा</h3>
+          <p>निःस्वार्थ सेवा भाव से समाज के हर वर्ग का उत्थान</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🌺</div>
+          <h3>संस्कृति</h3>
+          <p>भारतीय सनातन संस्कृति का संरक्षण और प्रचार-प्रसार</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section-testimonials">
+  <div class="container">
+    <div class="section-label">भक्तों के अनुभव</div>
+    <h2 class="section-title center">श्रद्धालुओं की वाणी</h2>
+    <div class="testimonial-carousel" id="testimonialCarousel">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p>रामकथा सुनकर मेरा जीवन पूर्णतः बदल गया। इस आयोजन ने मुझे जीवन का सही अर्थ समझाया।</p>
+          <div class="t-author"><span>— रमेश शर्मा, दिल्ली</span></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p>दिव्य चेतना ट्रस्ट का कार्य अतुलनीय है। भव्यता और भक्ति का ऐसा संगम कहीं और नहीं मिलता।</p>
+          <div class="t-author"><span>— सुनीता देवी, बेंगलुरु</span></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p>हर वर्ष इस आयोजन की प्रतीक्षा रहती है। कथावाचक का प्रसंग इतना मधुर होता है कि मन तृप्त हो जाता है।</p>
+          <div class="t-author"><span>— अजय पटेल, मुंबई</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="t-dots" id="tDots">
+      <button class="t-dot active" onclick="goToTestimonial(0)"></button>
+      <button class="t-dot" onclick="goToTestimonial(1)"></button>
+      <button class="t-dot" onclick="goToTestimonial(2)"></button>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Links -->
+<section class="section-quicklinks">
+  <div class="container">
+    <div class="quicklinks-grid">
+      <a href="pages/register.html" class="ql-card ql-register">
+        <div class="ql-icon">📝</div>
+        <h3>पंजीकरण</h3>
+        <p>ऑनलाइन पंजीकरण करें और QR टिकट प्राप्त करें</p>
+      </a>
+      <a href="pages/seva.html" class="ql-card ql-seva">
+        <div class="ql-icon">🤝</div>
+        <h3>सेवा दल</h3>
+        <p>स्वयंसेवक बनें और पुण्य कमाएं</p>
+      </a>
+      <a href="pages/gallery.html" class="ql-card ql-gallery">
+        <div class="ql-icon">🖼️</div>
+        <h3>गैलरी</h3>
+        <p>पिछले आयोजनों की यादगार झलकियाँ</p>
+      </a>
+      <a href="pages/contact.html" class="ql-card ql-contact">
+        <div class="ql-icon">📞</div>
+        <h3>संपर्क</h3>
+        <p>हमसे जुड़ें और जानकारी प्राप्त करें</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-mandala">ॐ</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">दिव्य चेतना</div>
+        <p>श्री रामकथा चैरिटेबल ट्रस्ट</p>
+        <p class="footer-tagline">॥ राम नाम सत्य है ॥</p>
+      </div>
+      <div class="footer-links">
+        <h4>त्वरित लिंक</h4>
+        <ul>
+          <li><a href="index.html">होम</a></li>
+          <li><a href="pages/about.html">परिचय</a></li>
+          <li><a href="pages/events.html">आयोजन</a></li>
+          <li><a href="pages/register.html">पंजीकरण</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>सेवाएं</h4>
+        <ul>
+          <li><a href="pages/seva.html">सेवा दल</a></li>
+          <li><a href="pages/gallery.html">गैलरी</a></li>
+          <li><a href="pages/contact.html">संपर्क</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>संपर्क</h4>
+        <p>📍 पैलेस ग्राउंड, गेट 9, बेंगलुरु</p>
+        <p>📞 +91 98765 43210</p>
+        <p>✉️ info@divyachetna.in</p>
+        <div class="social-links">
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 दिव्य चेतना श्री रामकथा चैरिटेबल ट्रस्ट · सर्वाधिकार सुरक्षित</p>
+      <p>॥ जय श्री राम ॥</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+  <button class="chat-toggle" id="chatToggle" aria-label="Chat">
+    <span class="chat-icon">💬</span>
+    <span class="chat-close-icon" style="display:none">✕</span>
+    <span class="chat-badge" id="chatBadge">1</span>
+  </button>
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">
+      <div class="chat-avatar">🙏</div>
+      <div>
+        <div class="chat-name">दिव्य चेतना सहायक</div>
+        <div class="chat-status">● ऑनलाइन</div>
+      </div>
+      <button class="chat-minimize" id="chatMinimize">−</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="msg-bubble">🙏 जय श्री राम! दिव्य चेतना में आपका स्वागत है। मैं आपकी सहायता के लिए यहाँ हूँ। आप पंजीकरण, आयोजन या किसी भी जानकारी के बारे में पूछ सकते हैं।</div>
+        <div class="msg-time">अभी</div>
+      </div>
+      <div class="chat-quick-btns" id="quickBtns">
+        <button onclick="sendQuick('पंजीकरण कैसे करें?')">📝 पंजीकरण</button>
+        <button onclick="sendQuick('आयोजन की जानकारी')">📅 आयोजन</button>
+        <button onclick="sendQuick('स्थान की जानकारी')">📍 स्थान</button>
+        <button onclick="sendQuick('सेवा दल में कैसे जुड़ें?')">🤝 सेवा</button>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="अपना संदेश यहाँ लिखें..." autocomplete="off">
+      <button id="chatSend" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>

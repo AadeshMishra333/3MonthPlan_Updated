@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart City Guide — Discover, explore, and navigate the best places in your city with interactive maps and detailed information.">
+    <title>Smart City Guide — Explore Your City</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <style>
+        /* ============================================= */
+        /*              DESIGN SYSTEM                     */
+        /* ============================================= */
+
+        :root {
+            /* Colors - Dark Theme (default) */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --bg-glass: rgba(17, 24, 39, 0.6);
+            --bg-hover: rgba(99, 102, 241, 0.12);
+            --bg-input: rgba(30, 41, 59, 0.8);
+
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.35);
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+
+            --border: rgba(148, 163, 184, 0.12);
+            --border-accent: rgba(99, 102, 241, 0.3);
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 24px var(--accent-glow);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+
+            --sidebar-width: 380px;
+            --header-height: 64px;
+
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Light Theme */
+        body.light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-hover: rgba(99, 102, 241, 0.08);
+            --bg-input: rgba(241, 245, 249, 0.9);
+
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+
+            --border: rgba(15, 23, 42, 0.1);
+            --border-accent: rgba(99, 102, 241, 0.25);
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        /* ============================================= */
+        /*              RESET & BASE                      */
+        /* ============================================= */
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.4s ease, color 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================= */
+        /*              SCROLLBAR                         */
+        /* ============================================= */
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+        /* ============================================= */
+        /*              HEADER                            */
+        /* ============================================= */
+
+        .header {
+            height: var(--header-height);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1100;
+            flex-shrink: 0;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-brand .logo {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .header-brand h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .header-brand h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-hover);
+            color: var(--accent);
+            border-color: var(--border-accent);
+            transform: translateY(-1px);
+        }
+
+        /* ============================================= */
+        /*              MAIN LAYOUT                       */
+        /* ============================================= */
+
+        .app-layout {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ============================================= */
+        /*              SIDEBAR                           */
+        /* ============================================= */
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 1000;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        /* Category Chips */
+        .category-chips {
+            display: flex;
+            gap: 6px;
+            padding: 12px 20px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .chip {
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            font-family: var(--font);
+        }
+
+        .chip:hover, .chip.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Place List */
+        .place-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 12px;
+        }
+
+        .place-card {
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-bottom: 4px;
+            animation: fadeInUp 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        .place-card:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-accent);
+            transform: translateX(4px);
+        }
+
+        .place-card .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .place-card .place-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .place-card .place-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--warning);
+            flex-shrink: 0;
+        }
+
+        .place-card .place-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .place-card .place-category {
+            padding: 2px 8px;
+            background: var(--accent-glow);
+            color: var(--accent-hover);
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .place-card .place-address {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .category-group-title {
+            padding: 10px 16px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .sidebar-footer .btn {
+            flex: 1;
+        }
+
+        /* ============================================= */
+        /*              MAP AREA                          */
+        /* ============================================= */
+
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Custom Map Marker Popups */
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--radius-md) !important;
+            box-shadow: var(--shadow-lg) !important;
+            padding: 0 !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 0 !important;
+            font-family: var(--font) !important;
+            min-width: 200px !important;
+        }
+
+        .popup-content {
+            padding: 16px;
+        }
+
+        .popup-content h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+
+        .popup-content .popup-cat {
+            font-size: 0.75rem;
+            color: #6366f1;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .popup-content .popup-rating {
+            font-size: 0.85rem;
+            color: #f59e0b;
+            margin-bottom: 6px;
+        }
+
+        .popup-content .popup-addr {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .popup-content .popup-btn {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.2s;
+        }
+
+        .popup-content .popup-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================================= */
+        /*              DETAIL PANEL                      */
+        /* ============================================= */
+
+        .detail-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid var(--border);
+            z-index: 1050;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -8px 0 32px rgba(0,0,0,0.3);
+        }
+
+        .detail-panel.open {
+            transform: translateX(0);
+        }
+
+        .detail-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 10;
+        }
+
+        .detail-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .detail-body {
+            padding: 20px 24px;
+        }
+
+        .detail-hero {
+            background: var(--accent-gradient);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .detail-hero h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-hero .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.85);
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-section p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ============================================= */
+        /*              BUTTONS                           */
+        /* ============================================= */
+
+        .btn {
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            border: none;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 32px var(--accent-glow);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-hover);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        /* ============================================= */
+        /*              MODAL                             */
+        /* ============================================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 520px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* ============================================= */
+        /*              DISTANCE SECTION                  */
+        /* ============================================= */
+
+        .distance-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            max-width: 90%;
+        }
+
+        .distance-section select {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.8rem;
+            outline: none;
+            min-width: 140px;
+            max-width: 180px;
+        }
+
+        .distance-section select:focus {
+            border-color: var(--accent);
+        }
+
+        .distance-section .distance-arrow {
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .distance-result {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        /* ============================================= */
+        /*              TOAST NOTIFICATIONS                */
+        /* ============================================= */
+
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1300;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.4s ease forwards;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 360px;
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--info); }
+
+        .toast.removing {
+            animation: toastOut 0.3s ease forwards;
+        }
+
+        /* ============================================= */
+        /*              LOADING / SKELETON                */
+        /* ============================================= */
+
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+            height: 56px;
+            margin-bottom: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            font-size: 0.85rem;
+        }
+
+        /* ============================================= */
+        /*              STAR RATING                       */
+        /* ============================================= */
+
+        .stars {
+            display: inline-flex;
+            gap: 1px;
+        }
+
+        .stars .star {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .stars .star.filled {
+            color: var(--warning);
+        }
+
+        /* ============================================= */
+        /*              ANIMATIONS                        */
+        /* ============================================= */
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        /* ============================================= */
+        /*              RESPONSIVE                        */
+        /* ============================================= */
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .detail-panel { width: 360px; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                transform: translateX(-100%);
+                z-index: 1050;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .detail-panel {
+                width: 100%;
+            }
+
+            .distance-section {
+                flex-wrap: wrap;
+                justify-content: center;
+                bottom: 16px;
+            }
+
+            .distance-section select {
+                min-width: 120px;
+            }
+
+            .header-brand h1 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =============== HEADER =============== -->
+    <header class="header">
+        <div class="header-brand">
+            <button class="icon-btn mobile-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">🏙️</div>
+            <h1>Smart<span>City</span> Guide</h1>
+            <span id="demoBadge" style="display:none; margin-left: 10px; padding: 4px 8px; background: var(--warning); color: #000; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">DEMO MODE</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost btn-sm" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙 Dark Mode</button>
+            <button class="btn btn-primary btn-sm" id="addPlaceBtn" onclick="openAddModal()">
+                ＋ Add Place
+            </button>
+        </div>
+    </header>
+
+    <!-- =============== MAIN LAYOUT =============== -->
+    <div class="app-layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search places, categories…"
+                           onkeyup="handleSearch(event)">
+                </div>
+            </div>
+
+            <div class="category-chips" id="categoryChips">
+                <button class="chip active" onclick="filterCategory('all', this)">All</button>
+            </div>
+
+            <div class="place-list" id="placeList">
+                <div class="empty-state">
+                    <div class="empty-icon">🗺️</div>
+                    <h3>Discover Places</h3>
+                    <p>Click "Load All" or search to explore</p>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-primary" onclick="loadAll()" id="loadAllBtn">📍 Load All Places</button>
+            </div>
+        </aside>
+
+        <!-- ===== MAP ===== -->
+        <div class="map-container">
+            <div id="map"></div>
+
+            <!-- Distance Calculator -->
+            <div class="distance-section" id="distanceSection" style="display:none;">
+                <select id="placeA"></select>
+                <span class="distance-arrow">⟷</span>
+                <select id="placeB"></select>
+                <button class="btn btn-primary btn-sm" onclick="calculateDistance()">Calculate</button>
+                <span class="distance-result" id="distanceOut"></span>
+            </div>
+        </div>
+
+        <!-- ===== DETAIL PANEL ===== -->
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-header">
+                <h2>Place Details</h2>
+                <button class="icon-btn" onclick="closeDetail()">✕</button>
+            </div>
+            <div class="detail-body" id="detailBody">
+                <!-- Filled dynamically -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =============== ADD PLACE MODAL =============== -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📍 Add New Place</h2>
+                <button class="icon-btn" onclick="closeAddModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Place Name *</label>
+                    <input type="text" id="inp_name" placeholder="e.g. Lalbagh Botanical Garden">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <input type="text" id="inp_cat" placeholder="e.g. Park, Monument">
+                    </div>
+                    <div class="form-group">
+                        <label>Rating (0–5)</label>
+                        <input type="number" id="inp_rate" min="0" max="5" step="0.1" placeholder="4.5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="inp_addr" placeholder="e.g. Mavalli, Bengaluru">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Latitude *</label>
+                        <input type="number" id="inp_lat" step="any" placeholder="12.9508">
+                    </div>
+                    <div class="form-group">
+                        <label>Longitude *</label>
+                        <input type="number" id="inp_lng" step="any" placeholder="77.5847">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeAddModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addPlace()">Add Place</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============== TOAST CONTAINER =============== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- =============== SCRIPTS =============== -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+    /* ==============================================
+       HYBRID DEMO INTERCEPTOR FOR GITHUB PAGES
+       Ensures the app works fully statically by falling back to LocalStorage.
+    ============================================== */
+    (function() {
+        const originalFetch = window.fetch;
+        let isDemoMode = false;
+        let demoPlaces = null;
+
+        async function getDemoPlaces() {
+            if (demoPlaces) return demoPlaces;
+            let stored = localStorage.getItem('demo_places');
+            if (stored) {
+                try {
+                    demoPlaces = JSON.parse(stored);
+                    return demoPlaces;
+                } catch(e) {}
+            }
+            try {
+                const res = await originalFetch('places_with_details.json');
+                if (res.ok) {
+                    demoPlaces = await res.json();
+                    localStorage.setItem('demo_places', JSON.stringify(demoPlaces));
+                    return demoPlaces;
+                }
+            } catch (err) {
+                console.warn('Failed to load places_with_details.json, using hardcoded fallback', err);
+            }
+            demoPlaces = [
+                {
+                    id: 1,
+                    name: "Lalbagh Botanical Garden",
+                    category: "Tourist",
+                    address: "Lalbagh Rd, Bengaluru",
+                    rating: 4.8,
+                    latitude: 12.9507,
+                    longitude: 77.5848,
+                    history: "Lalbagh Botanical Garden was commissioned by Hyder Ali in 1760 and expanded by Tipu Sultan.",
+                    description: "One of the largest botanical gardens in India, famous for its glass house.",
+                    interestingFacts: "Hosts biannual flower shows and has rock formations over 3 billion years old.",
+                    yearEstablished: 1760
+                },
+                {
+                    id: 2,
+                    name: "Cubbon Park",
+                    category: "Tourist",
+                    address: "Kasturba Rd, Bengaluru",
+                    rating: 4.7,
+                    latitude: 12.9763,
+                    longitude: 77.5929,
+                    history: "Cubbon Park was established in 1870 by Major General Richard Sankey.",
+                    description: "A major landmark park in the heart of Bengaluru, rich in flora and heritage buildings.",
+                    interestingFacts: "Home to the State Central Library and a toy train.",
+                    yearEstablished: 1870
+                }
+            ];
+            localStorage.setItem('demo_places', JSON.stringify(demoPlaces));
+            return demoPlaces;
+        }
+
+        function saveDemoPlaces(places) {
+            demoPlaces = places;
+            localStorage.setItem('demo_places', JSON.stringify(places));
+        }
+
+        window.fetch = async function(url, options) {
+            const urlStr = typeof url === 'object' && url.url ? url.url : String(url);
+            const urlObj = new URL(urlStr, window.location.href);
+            const path = urlObj.pathname;
+
+            if (!isDemoMode && (path === '/places' || path.endsWith('/places'))) {
+                try {
+                    const res = await originalFetch(url, options);
+                    if (res.ok) return res;
+                    throw new Error('Non-ok response');
+                } catch (e) {
+                    console.log('Backend not reachable. Enabling local static Demo Mode.', e);
+                    isDemoMode = true;
+                    const badge = document.getElementById('demoBadge');
+                    if (badge) badge.style.display = 'inline-block';
+                }
+            }
+
+            if (!isDemoMode) {
+                return originalFetch(url, options);
+            }
+
+            const places = await getDemoPlaces();
+
+            if (path === '/places' || path.endsWith('/places')) {
+                const basicPlaces = places.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    category: p.category,
+                    address: p.address,
+                    rating: p.rating,
+                    latitude: p.latitude,
+                    longitude: p.longitude
+                }));
+                return new Response(JSON.stringify(basicPlaces), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            if (path === '/search' || path.endsWith('/search')) {
+                const q = urlObj.searchParams.get('q') || '';
+                const term = q.toLowerCase();
+                const matched = places.filter(p =>
+                    (p.name && p.name.toLowerCase().includes(term)) ||
+                    (p.category && p.category.toLowerCase().includes(term)) ||
+                    (p.address && p.address.toLowerCase().includes(term))
+                ).map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    category: p.category,
+                    address: p.address,
+                    rating: p.rating,
+                    latitude: p.latitude,
+                    longitude: p.longitude
+                }));
+                return new Response(JSON.stringify(matched), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            if (path === '/place/details' || path.endsWith('/place/details')) {
+                const id = parseInt(urlObj.searchParams.get('id'));
+                const found = places.find(p => p.id === id);
+                if (found) {
+                    return new Response(JSON.stringify(found), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+                return new Response(JSON.stringify({ error: 'Place not found' }), {
+                    status: 404,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            if (path === '/add' || path.endsWith('/add')) {
+                let bodyStr = '';
+                if (options && options.body) {
+                    bodyStr = options.body;
+                }
+                const params = new URLSearchParams(bodyStr);
+                const name = params.get('name');
+                const category = params.get('category');
+                const address = params.get('address');
+                const rating = parseFloat(params.get('rating')) || 0;
+                const latitude = parseFloat(params.get('latitude'));
+                const longitude = parseFloat(params.get('longitude'));
+
+                if (!name || !category || isNaN(latitude) || isNaN(longitude)) {
+                    return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+                        status: 400,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+
+                const nextId = places.length > 0 ? Math.max(...places.map(p => p.id)) + 1 : 1;
+                const newPlace = {
+                    id: nextId,
+                    name,
+                    category,
+                    address,
+                    rating,
+                    latitude,
+                    longitude,
+                    history: 'Added in demo mode.',
+                    description: 'This place was added while running in static demo mode.',
+                    interestingFacts: 'Data is stored in your local browser.',
+                    yearEstablished: new Date().getFullYear()
+                };
+
+                places.push(newPlace);
+                saveDemoPlaces(places);
+
+                return new Response(JSON.stringify(newPlace), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            if (path === '/delete' || path.endsWith('/delete')) {
+                const id = parseInt(urlObj.searchParams.get('id'));
+                const index = places.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    places.splice(index, 1);
+                    saveDemoPlaces(places);
+                    return new Response(JSON.stringify({ success: true }), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+                return new Response(JSON.stringify({ error: 'Place not found' }), {
+                    status: 404,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            return originalFetch(url, options);
+        };
+    })();
+
+    /* ==============================================
+       STATE
+    ============================================== */
+    let allPlaces = [];
+    let filteredPlaces = [];
+    let markers = [];
+    let routeLine = null;
+    let activeCategory = 'all';
+
+    /* ==============================================
+       UTILITIES
+    ============================================== */
+    function escHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    /* ==============================================
+       MAP SETUP
+    ============================================== */
+    const map = L.map('map', {
+        zoomControl: true,
+    }).setView([12.9716, 77.5946], 12);
+
+    const lightTiles = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        { attribution: '© OpenStreetMap' }
+    );
+
+    const darkTiles = L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        { attribution: '© OpenStreetMap © CARTO' }
+    );
+
+    // Default to dark tiles to match dark theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light');
+        lightTiles.addTo(map);
+        document.getElementById('themeToggle').innerHTML = '☀️ Light Mode';
+    } else {
+        darkTiles.addTo(map);
+        document.getElementById('themeToggle').innerHTML = '🌙 Dark Mode';
+    }
+
+    /* ==============================================
+       THEME
+    ============================================== */
+    function toggleTheme() {
+        const isLight = document.body.classList.toggle('light');
+        const btn = document.getElementById('themeToggle');
+
+        if (isLight) {
+            map.removeLayer(darkTiles);
+            lightTiles.addTo(map);
+            localStorage.setItem('theme', 'light');
+            btn.innerHTML = '☀️ Light Mode';
+        } else {
+            map.removeLayer(lightTiles);
+            darkTiles.addTo(map);
+            localStorage.setItem('theme', 'dark');
+            btn.innerHTML = '🌙 Dark Mode';
+        }
+    }
+
+    /* ==============================================
+       SIDEBAR TOGGLE (MOBILE)
+    ============================================== */
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    /* ==============================================
+       STARS RENDERING
+    ============================================== */
+    function renderStars(rating) {
+        let html = '<span class="stars">';
+        for (let i = 1; i <= 5; i++) {
+            html += `<span class="star ${i <= Math.round(rating) ? 'filled' : ''}">★</span>`;
+        }
+        html += '</span>';
+        return html;
+    }
+
+    /* ==============================================
+       LOAD ALL PLACES
+    ============================================== */
+    function loadAll() {
+        showSkeletons();
+        fetch('/places')
+            .then(r => r.json())
+            .then(data => {
+                allPlaces = data;
+                filteredPlaces = data;
+                loadCategories();
+                renderPlaces(data);
+                populateDropdowns();
+                document.getElementById('distanceSection').style.display = data.length >= 2 ? 'flex' : 'none';
+            })
+            .catch(() => showToast('Failed to load places', 'error'));
+    }
+
+    /* ==============================================
+       SEARCH
+    ============================================== */
+    function handleSearch(e) {
+        const q = e.target.value.trim();
+        if (q.length === 0) {
+            if (allPlaces.length) {
+                filteredPlaces = activeCategory === 'all'
+                    ? allPlaces
+                    : allPlaces.filter(p => p.category.toUpperCase() === activeCategory);
+                renderPlaces(filteredPlaces);
+            }
+            return;
+        }
+        if (e.key === 'Enter' || q.length >= 2) {
+            fetch('/search?q=' + encodeURIComponent(q))
+                .then(r => r.json())
+                .then(data => {
+                    filteredPlaces = data;
+                    renderPlaces(data);
+                })
+                .catch(() => showToast('Search failed', 'error'));
+        }
+    }
+
+    /* ==============================================
+       LOAD CATEGORIES
+    ============================================== */
+    function loadCategories() {
+        const cats = [...new Set(allPlaces.map(p => p.category.toUpperCase()))].sort();
+        const container = document.getElementById('categoryChips');
+        container.innerHTML = '<button class="chip active" onclick="filterCategory(\'all\', this)">All</button>';
+        cats.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'chip';
+            btn.textContent = cat;
+            btn.onclick = function() { filterCategory(cat, this); };
+            container.appendChild(btn);
+        });
+    }
+
+    function filterCategory(cat, btn) {
+        activeCategory = cat;
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (cat === 'all') {
+            filteredPlaces = allPlaces;
+        } else {
+            filteredPlaces = allPlaces.filter(p => p.category.toUpperCase() === cat);
+        }
+        renderPlaces(filteredPlaces);
+    }
+
+    /* ==============================================
+       RENDER PLACES
+    ============================================== */
+    function renderPlaces(data) {
+        // Clear markers
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+        if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+
+        const list = document.getElementById('placeList');
+        list.innerHTML = '';
+
+        if (!data || data.length === 0) {
+            list.innerHTML = `
+                <div class="empty-state fade-in">
+                    <div class="empty-icon">🔍</div>
+                    <h3>No places found</h3>
+                    <p>Try a different search or add a new place</p>
+                </div>`;
+            return;
+        }
+
+        // Group by category
+        const grouped = {};
+        data.forEach(p => {
+            const c = p.category.toUpperCase();
+            if (!grouped[c]) grouped[c] = [];
+            grouped[c].push(p);
+        });
+
+        let delay = 0;
+        Object.keys(grouped).sort().forEach(cat => {
+            const title = document.createElement('div');
+            title.className = 'category-group-title';
+            title.textContent = cat + ' (' + grouped[cat].length + ')';
+            list.appendChild(title);
+
+            grouped[cat].forEach(p => {
+                // Map marker
+                const marker = L.marker([p.latitude, p.longitude]).addTo(map);
+                marker.bindPopup(`
+                    <div class="popup-content">
+                        <div class="popup-cat">${escHtml(p.category)}</div>
+                        <h3>${escHtml(p.name)}</h3>
+                        <div class="popup-rating">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5 - Math.round(p.rating))} ${p.rating.toFixed(1)}</div>
+                        <div class="popup-addr">📍 ${escHtml(p.address || 'No address')}</div>
+                        <button class="popup-btn" onclick="loadPlaceDetails(${p.id})">View Details →</button>
+                    </div>
+                `);
+                markers.push(marker);
+
+                // Card
+                const card = document.createElement('div');
+                card.className = 'place-card';
+                card.style.animationDelay = delay + 'ms';
+                delay += 40;
+
+                card.innerHTML = `
+                    <div class="card-top">
+                        <span class="place-name">${escHtml(p.name)}</span>
+                        <span class="place-rating">★ ${p.rating.toFixed(1)}</span>
+                    </div>
+                    <div class="place-meta">
+                        <span class="place-category">${escHtml(p.category)}</span>
+                        <span class="place-address">📍 ${escHtml(p.address || '')}</span>
+                    </div>
+                `;
+
+                card.onclick = () => {
+                    map.setView([p.latitude, p.longitude], 15);
+                    marker.openPopup();
+                    loadPlaceDetails(p.id);
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebar').classList.remove('open');
+                    }
+                };
+
+                list.appendChild(card);
+            });
+        });
+
+        // Fit map bounds
+        if (markers.length > 0) {
+            const group = L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+    }
+
+    /* ==============================================
+       SKELETONS
+    ============================================== */
+    function showSkeletons() {
+        const list = document.getElementById('placeList');
+        list.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+            const sk = document.createElement('div');
+            sk.className = 'skeleton';
+            list.appendChild(sk);
+        }
+    }
+
+    /* ==============================================
+       PLACE DETAILS
+    ============================================== */
+    function loadPlaceDetails(id) {
+        const panel = document.getElementById('detailPanel');
+        const body = document.getElementById('detailBody');
+
+        body.innerHTML = '<div class="skeleton" style="height:120px"></div><div class="skeleton" style="height:60px;margin-top:12px"></div>';
+        panel.classList.add('open');
+
+        fetch('/place/details?id=' + id)
+            .then(r => r.json())
+            .then(p => {
+                if (p.error) {
+                    body.innerHTML = `<div class="empty-state"><h3>Place not found</h3></div>`;
+                    return;
+                }
+
+                body.innerHTML = `
+                    <div class="detail-hero">
+                        <h2>${escHtml(p.name)}</h2>
+                        <div class="hero-meta">
+                            <span>${escHtml(p.category)}</span>
+                            <span>•</span>
+                            <span>${'★'.repeat(Math.round(p.rating))} ${p.rating.toFixed(1)}</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">${p.rating.toFixed(1)}</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${p.yearEstablished || '—'}</div>
+                            <div class="stat-label">Established</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${p.latitude.toFixed(2)}°</div>
+                            <div class="stat-label">Latitude</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${p.longitude.toFixed(2)}°</div>
+                            <div class="stat-label">Longitude</div>
+                        </div>
+                    </div>
+
+                    ${p.address ? `
+                    <div class="detail-section">
+                        <h3>📍 Location</h3>
+                        <p>${escHtml(p.address)}</p>
+                    </div>` : ''}
+
+                    ${p.description ? `
+                    <div class="detail-section">
+                        <h3>📝 Description</h3>
+                        <p>${escHtml(p.description)}</p>
+                    </div>` : ''}
+
+                    ${p.history ? `
+                    <div class="detail-section">
+                        <h3>📜 History</h3>
+                        <p>${escHtml(p.history)}</p>
+                    </div>` : ''}
+
+                    ${p.interestingFacts ? `
+                    <div class="detail-section">
+                        <h3>💡 Interesting Facts</h3>
+                        <p>${escHtml(p.interestingFacts)}</p>
+                    </div>` : ''}
+
+                    <div class="detail-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deletePlace(${p.id})">🗑 Delete</button>
+                        <div style="flex:1"></div>
+                        <button class="btn btn-sm" onclick="closeDetail()">Close</button>
+                    </div>
+                `;
+            })
+            .catch(() => {
+                body.innerHTML = `<div class="empty-state"><h3>Failed to load details</h3></div>`;
+            });
+    }
+
+    function closeDetail() {
+        document.getElementById('detailPanel').classList.remove('open');
+    }
+
+    /* ==============================================
+       ADD PLACE
+    ============================================== */
+    function openAddModal() {
+        document.getElementById('addModal').classList.add('open');
+        document.getElementById('inp_name').focus();
+    }
+
+    function closeAddModal() {
+        document.getElementById('addModal').classList.remove('open');
+        clearAddForm();
+    }
+
+    function clearAddForm() {
+        ['inp_name', 'inp_cat', 'inp_rate', 'inp_addr', 'inp_lat', 'inp_lng'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+    }
+
+    function addPlace() {
+        const name = document.getElementById('inp_name').value.trim();
+        const cat = document.getElementById('inp_cat').value.trim();
+        const rate = document.getElementById('inp_rate').value.trim();
+        const addr = document.getElementById('inp_addr').value.trim();
+        const lat = document.getElementById('inp_lat').value.trim();
+        const lng = document.getElementById('inp_lng').value.trim();
+
+        if (!name || !cat || !lat || !lng) {
+            showToast('Please fill in all required fields (*)', 'error');
+            return;
+        }
+
+        fetch('/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&address=${encodeURIComponent(addr)}&rating=${rate || 0}&latitude=${lat}&longitude=${lng}`
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.error) {
+                showToast(result.error, 'error');
+            } else {
+                showToast(`"${name}" added successfully!`, 'success');
+                closeAddModal();
+                loadAll();
+            }
+        })
+        .catch(() => showToast('Failed to add place', 'error'));
+    }
+
+    /* ==============================================
+       DELETE PLACE
+    ============================================== */
+    function deletePlace(id) {
+        if (!confirm('Are you sure you want to delete this place?')) return;
+
+        fetch('/delete?id=' + id)
+            .then(r => r.json())
+            .then(result => {
+                if (result.error) {
+                    showToast(result.error, 'error');
+                } else {
+                    showToast('Place deleted', 'success');
+                    closeDetail();
+                    loadAll();
+                }
+            })
+            .catch(() => showToast('Delete failed', 'error'));
+    }
+
+    /* ==============================================
+       DISTANCE CALCULATOR
+    ============================================== */
+    function populateDropdowns() {
+        const a = document.getElementById('placeA');
+        const b = document.getElementById('placeB');
+        a.innerHTML = '';
+        b.innerHTML = '';
+
+        allPlaces.forEach((p, i) => {
+            a.add(new Option(p.name, i));
+            b.add(new Option(p.name, i));
+        });
+
+        // Select second option for B if possible
+        if (allPlaces.length > 1) b.selectedIndex = 1;
+    }
+
+    function calculateDistance() {
+        const p1 = allPlaces[document.getElementById('placeA').value];
+        const p2 = allPlaces[document.getElementById('placeB').value];
+
+        if (!p1 || !p2) return;
+
+        const d = haversine(p1.latitude, p1.longitude, p2.latitude, p2.longitude);
+        document.getElementById('distanceOut').textContent = d.toFixed(2) + ' km';
+
+        // Draw a line between the two places
+        if (routeLine) map.removeLayer(routeLine);
+        routeLine = L.polyline(
+            [[p1.latitude, p1.longitude], [p2.latitude, p2.longitude]],
+            { color: '#6366f1', weight: 3, dashArray: '8, 8', opacity: 0.8 }
+        ).addTo(map);
+
+        map.fitBounds(routeLine.getBounds().pad(0.3));
+    }
+
+    function toRad(v) { return v * Math.PI / 180; }
+
+    function haversine(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+        const a = Math.sin(dLat / 2) ** 2 +
+                  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                  Math.sin(dLon / 2) ** 2;
+        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
+
+    /* ==============================================
+       TOAST NOTIFICATIONS
+    ============================================== */
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+
+        const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+        toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span> ${escHtml(message)}`;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('removing');
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+
+    /* ==============================================
+       UTILS
+    ============================================== */
+    function escHtml(s) {
+        if (!s) return '';
+        const div = document.createElement('div');
+        div.textContent = s;
+        return div.innerHTML;
+    }
+
+    /* ==============================================
+       AUTO-LOAD ON STARTUP
+    ============================================== */
+    loadAll();
+    </script>
+
+</body>
+</html>
