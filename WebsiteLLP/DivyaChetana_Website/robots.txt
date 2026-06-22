@@ -1,0 +1,11 @@
+# DivyaChetana Organics LLP — robots.txt
+# https://www.divyachetana.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.divyachetana.com/sitemap.xml
+
+# Disallow admin/internal paths
+Disallow: /Company Related Documents/
